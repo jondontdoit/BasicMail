@@ -1,0 +1,233 @@
+body {
+  background: url('../background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 15px;
+  margin: 0;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: navy;
+}
+
+a:hover {
+  color: white;
+}
+
+
+/***************************************************
+  HEADER / NAV
+***************************************************/
+
+header {
+  width: 100%;
+  height: 33px;
+  background-color: rgba(192,192,192,0.7);
+  margin-bottom: 60px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  float: left;
+  width: 20%;
+  font-weight: bold;
+  border-right: 1px solid black;
+  padding: 5px;
+  font-size: 20px;
+}
+
+nav li div {
+  width: 100%;
+}
+
+nav li:hover {
+  background-color: rgba(0,0,223,0.5);
+}
+
+div.header-title {
+  float: right;
+  color: black;
+  width: auto;
+  font-size: 25px;
+  font-weight: bold;
+  padding-top: 2px;
+  padding-right: 10px;
+}
+
+
+/***************************************************
+  INBOX / SENT
+***************************************************/
+
+div.list-header {
+  float: left;
+  clear: both;
+  margin-bottom: 0em;
+  margin-left: 25px;
+  margin-right: 25px;
+  padding: 0.5em;
+  border: 1px solid black;
+  width: 95%;
+  background-color: rgba(192,192,192,0.8);
+  font-weight: bold;
+}
+
+div.list-odd, div.list-even {
+  float: left;
+  clear: both;
+  margin-bottom: 0em;
+  margin-left: 25px;
+  margin-right: 25px;
+  padding: 0.5em;
+  border: 1px solid black;
+  border-top: 0;
+  width: 95%;
+}
+
+div.list-odd {
+  background-color: rgba(192,192,192,0.8);
+}
+
+div.list-odd:hover {
+  background-color: rgba(0,0,223,0.8);
+}
+
+div.list-even {
+  background-color: rgba(223,223,223,0.8);
+}
+
+div.list-even:hover {
+  background-color: rgba(0,0,240,0.8);
+}
+
+span.read {
+  font-weight: normal;
+}
+
+span.unread {
+  font-weight: bold;
+}
+
+div.who {
+  float: left;
+  text-align: left;
+  width: 20%;
+}
+
+div.subject {
+  float: left;
+  text-align: left;
+  width: 60%;
+}
+
+div.date {
+  float: right;
+  text-align: right;
+  font-size: 12px;
+}
+
+div.list-footer {
+	clear: both;
+}
+
+
+/***************************************************
+  MESSAGE
+***************************************************/
+
+div.message, div.message-header, div.message-attachments {
+  border: 1px solid black;
+  background-color: rgba(223,223,223,0.8);
+	margin: 25px;
+  padding: 15px;
+  text-align: left;
+}
+
+div.message-header span {
+	font-weight: bold;
+}
+
+div.message-header select {
+  font-size: 18px;
+}
+
+div.message h1 {
+  font-size: 25px;
+  font-weight: bold;
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+div.message input {
+  width: 100%;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+div.message textarea {
+  width: 100%;
+  height: 250px;
+  font-size: 15px;
+}
+
+div.message-attachments {
+  font-weight: bold;
+}
+
+div.message-attachments h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+span.message-send-error {
+  color: red;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+
+span.message-send-success {
+  color: green;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+
+
+/***************************************************
+  ACTION BUTTON / FOOTER
+***************************************************/
+
+div.action-button {
+	width: 200px;
+  margin-left: 25px;
+  border: 1px solid black;
+  background-color: rgba(223,223,223,0.8);
+}
+
+div.action-button div {
+	padding-top: 15px;
+	padding-bottom: 15px;
+  font-weight: bold;
+}
+
+div.action-button div:hover {
+  background-color: rgba(0,0,240,0.8);
+}
+
+footer {
+  clear: both;
+  width: 100%;
+  height: 50px;
+}

@@ -1,8 +1,11 @@
-<?php
-	/* close the IMAP connection */
-	imap_close($inbox);
-?>
-</center>
+
+  <footer>&nbsp;</footer>
+
 </body>
 
 </html>
+
+<?php
+	// Close the connection
+	imap_close($inbox);
+?>
