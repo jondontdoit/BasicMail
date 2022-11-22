@@ -12,12 +12,16 @@
   $uid = $_GET['uid'];
 
   // Fetch message
-  $overview = imap_fetch_overview($inbox,$uid,FT_UID);
-  $header = imap_fetchheader($inbox,$uid,FT_UID);
-  $structure = imap_fetchstructure($inbox, $uid, FT_UID);
-  $message = get_message($inbox,$uid);
+  $overview = imap_fetch_overview($mconn,$uid,FT_UID);
+  $header = imap_fetchheader($mconn,$uid,FT_UID);
+  $structure = imap_fetchstructure($mconn, $uid, FT_UID);
+  $message = get_message($mconn,$uid);
 
-  $message_from = imap_utf8($overview[0]->from);
+  if ($mbox == 'sent') {
+    $message_person = imap_utf8($overview[0]->to);
+  } else {
+    $message_person = imap_utf8($overview[0]->from);
+  }
   $message_date = htmlspecialchars($overview[0]->date);
   $message_subject = htmlspecialchars($overview[0]->subject);
 
@@ -26,7 +30,7 @@
   $attachments = get_attachments($structure);
 
   // Check if the sender is in the list - if so, allow reply
-	if (in_array(strtolower($message_from),array_map('strtolower',$allowed_email)) && $mbox == 'inbox') {
+	if ($mbox == 'inbox' && check_email($message_person, $allowed_email)) {
 		$reply_enable = true;
 	} else {
 		$reply_enable = false;
@@ -35,7 +39,7 @@
   require 'header.php';
 ?>
   <div class="message-header">
-    <span>From:</span>&nbsp;&nbsp;<?php echo htmlspecialchars($message_from); ?><br />
+    <span><?php echo ($mbox == 'sent' ? 'To' : 'From'); ?>:</span>&nbsp;&nbsp;<?php echo htmlspecialchars($message_person); ?><br />
     <span>Date:</span>&nbsp;&nbsp;&nbsp;<?php echo $message_date; ?>
   </div>
 

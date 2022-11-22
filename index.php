@@ -6,17 +6,16 @@
   $view = $list_size_default;
   if (isset($_GET['view']) && $_GET['view'] == 'all') $view = $list_size_maximum;
 
-  // Fetch all messages
-  $emails = imap_search($inbox,'ALL');
+  // Fetch all messages and sort by newest
+  //$emails = imap_sort($mconn, SORTARRIVAL, true, SE_UID, 'ALL');
+  $emails = imap_search($mconn,'ALL'); rsort($emails);
 
   require 'header.php';
 
   // Build List
   $output = '';
 
-  if($emails) {
-    // Sort messages newest first
-    rsort($emails);
+  if ($emails) {
 
     // List Header
     $output .= '  <div class="list-header">'."\n";
@@ -35,7 +34,7 @@
       if ($count < $view) {
 
         // Fetch message overview
-        $overview = imap_fetch_overview($inbox,$email_number,0);
+        $overview = imap_fetch_overview($mconn,$email_number,0);
 
         // Output the message details
         $output .= '  <a href="message_view.php?'.($mbox == 'sent' ? 'mbox=sent&' : '').'uid='.$overview[0]->uid.'">'."\n";
@@ -43,7 +42,7 @@
         $output .= '      <span class="'.($overview[0]->seen ? 'read' : 'unread').'">'."\n";
         $output .= '        <div class="who">'.ucwords(strip_tags(($mbox == 'inbox' ? $overview[0]->from : $overview[0]->to))).'</div>'."\n";
         $output .= '        <div class="subject">'.imap_utf8($overview[0]->subject).'</div>'."\n";
-        $output .= '        <div class="date">'.date('Y-m-d H:i:s',strtotime($overview[0]->date)).'</div>'."\n";
+        $output .= '        <div class="date">'.date('Y-m-d H:i:s',strtotime(str_replace(' UT', ' UTC', $overview[0]->date))).'</div>'."\n";
         $output .= '      </span>'."\n";
         $output .= '    </div>'."\n";
         $output .= '  </a>'."\n\n";

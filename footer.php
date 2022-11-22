@@ -7,5 +7,5 @@
 
 <?php
 	// Close the connection
-	imap_close($inbox);
+	imap_close($mconn);
 ?>

@@ -13,7 +13,7 @@
 	$filename = $_GET['filename'];
 
 	// Fetch message
-	$structure = imap_fetchstructure($inbox, $uid, FT_UID);
+	$structure = imap_fetchstructure($mconn, $uid, FT_UID);
 
 	// Process attachments
 	$attachments = array();
@@ -27,7 +27,7 @@
 				header("Content-Transfer-Encoding: ".$at['encoding']);
 				header("Content-Disposition: inline; filename=".$at['filename']);
 
-				$content = imap_fetchbody($inbox,$uid,$at['part'],FT_UID);
+				$content = imap_fetchbody($mconn,$uid,$at['part'],FT_UID);
 
 				if ($content !== false && strlen($content) > 0 && $content != '') {
 					if ($at['encoding'] == '3') $content = base64_decode($content);

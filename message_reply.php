@@ -12,11 +12,11 @@
   $uid = $_GET['uid'];
 
   // Fetch message
-  $overview = imap_fetch_overview($inbox,$uid,FT_UID);
+  $overview = imap_fetch_overview($mconn,$uid,FT_UID);
   if ($reply_inline) {
-    $message = get_message_plaintext($inbox,$uid);
+    $message = get_message_plaintext($mconn,$uid);
   } else {
-    $message = get_message($inbox,$uid);
+    $message = get_message($mconn,$uid);
   }
 
   $message_from = imap_utf8($overview[0]->from);
@@ -24,7 +24,7 @@
   $message_subject = htmlspecialchars($overview[0]->subject);
 
   // If the from address isn't in the allowed list, return to the Inbox
-  if (!in_array(strtolower($message_from),array_map('strtolower',$allowed_email))) {
+  if (!check_email($message_from, $allowed_email)) {
     header("Location: index.php");
     die;
   }

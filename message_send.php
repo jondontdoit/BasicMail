@@ -7,19 +7,20 @@
 
 	require 'config.php';
 	require 'connect.php';
+	require 'message_functions.php';
 
 	// Error checking
 	$is_error = false;
 	$error_message = '';
 
 	// Process Recipient - ensure they're on the allowed list
-	if (!isset($_POST['message-to']) || !in_array(strtolower($_POST['message-to']),array_map('strtolower',$allowed_email))) {
+	$new_message_to = check_email($_POST['message-to'], $allowed_email);
+	if (!$new_message_to) {
 		$is_error = true;
 		$error_message .= "Could not find '".$_POST['message-to']."' in allowed list.\n";
 		$new_message_to = $error_email;
-	} else {
-		$new_message_to = $_POST['message-to'];
 	}
+	
 	// Split up "To" field - Format must always be "[Name] <[email]>"
 	$pieces = explode('<', $new_message_to);
 	if (count($pieces) != 2) {
@@ -55,6 +56,7 @@
 	// Send the message!
 	// Set this to false if you want to debug and not send any emails
 	if (true) {
+
 		require("phpmailer/class.phpmailer.php");
 		$mail = new PHPMailer();
 		$mail->IsSMTP(); // send via SMTP
@@ -62,7 +64,7 @@
 		$mail->Host = $smtp_host;
 		$mail->Port = $smtp_port;
 		$mail->SMTPAuth = $smtp_auth;
-		$mail->SMTPSecure = "tls";
+		//$mail->SMTPSecure = "tls";
 		$mail->Username = $username; // SMTP username
 		$mail->Password = $password; // SMTP password
 		$mail->SetFrom($username,$from_name);
@@ -78,6 +80,15 @@
 			$is_error = true;
 			$error_message .= $mail->ErrorInfo;
 		}
+
+		imap_append($mconn, $hostname."INBOX.Sent",
+	    "From: ".$from_email."\r\n".
+	    "To: ".$new_message_to_email."\r\n".
+	    "Subject: ".$new_message_subject."\r\n".
+	    "Date: ".date("r", strtotime("now"))."\r\n".
+	    "\r\n".$new_message_body."\r\n"
+	    );
+
 	}
 
 	require 'header.php';

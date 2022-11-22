@@ -1,5 +1,18 @@
 <?php
 
+	// Determine if an email address is on the allowed list
+	function check_email($address, $allowed_email) {
+	  if (in_array(strtolower($address),array_map('strtolower',$allowed_email))) {
+	    return $address;
+	  }
+	  foreach ($allowed_email as $value) {
+	    if (strpos(strtolower($value), strtolower($address)) !== false) {
+	      return $value;
+	    }
+	  }
+    return false;
+	}
+
 	// Use this function to get the message in whatever format it's in
   function get_message($inbox, $uid) {
 
