@@ -84,6 +84,7 @@
     // First round, emptying results
     if (is_null($part)) {
       $results = array();
+      $part = '';
     }
     else {
       // Removing first dot (.)
